@@ -1,3 +1,4 @@
+import string
 from Classes.EstruturaDados import Pilha as imp_pilha
 class ExpressaoInf:
     """
@@ -39,4 +40,55 @@ class ExpressaoInf:
     ## Método: identificar se um dado operador é negativo
     def eh_operador(self, caracter):
         return True if ("+-*/" in caracter) else False
-    
+
+    ## Método: descobrir qual o proximo item da formula
+    def sequencia_numerica(self, seq, formula, atual):
+        while(atual < self._tamanho_formula-1 and not self.eh_operador(formula[atual + 1])) and not self.eh_parenteses(formula[atual + 1]):
+            seq += formula[atual + 1]
+            atual+=1
+        self._indice = atual
+        return seq
+
+
+    ## Método: empilhar a expressão matemática
+    def empilhar_expressao(self):
+
+        pilha = imp_pilha.Pilha()
+        formula_desmembrada = []
+        self._indice = 0
+        z = 0
+        #formula operador, proximo, anterior, caracter, elemento = ''
+        try:
+            ## s.translate({ord(c): None for c in string.whitespace})
+            ##formula = self._get_notacao
+            formula = self.notacao
+            formula.replace(" ", "")
+
+            ## Gerar uma list com todos os elementos da formula
+            formula_desmembrada = list(formula)
+
+            ## Percorre a lista com os itens da expressao passada, e empilha-los na pilha
+            for caracter in formula_desmembrada:
+
+                if self._indice == 0 and not self.eh_parenteses(caracter):
+                    elemento = self.sequencia_numerica(caracter, formula_desmembrada, self._indice)
+                    pilha.empilha(elemento)
+                elif self.eh_operador(caracter):
+                    elemento = caracter
+                    if self.eh_operador_negativo(caracter):
+                        anterior = formula_desmembrada[self._indice - 1]
+                        if self.eh_operador(anterior) or self.eh_parenteses(anterior):
+                            elemento = self.sequencia_numerica(caracter, formula, self._indice)
+                    pilha.empilha(elemento)
+                elif not self.eh_operador(caracter) and not self.eh_parenteses(caracter) and (self._indice < formula_desmembrada.__len__() - 1):
+                    elemento = self.sequencia_numerica(caracter, formula_desmembrada, self._indice)
+                    pilha.empilha(elemento)
+                elif not self.eh_operador(caracter) and not self.eh_parenteses(caracter):
+                    elemento = caracter
+                    pilha.empilha(elemento)
+            return pilha
+        except OSError as erro:
+            print("Erro ao inserir a formula infixa na pilha. Erro: {}".format(erro.strerror))
+        finally:
+            pass
+

@@ -79,7 +79,7 @@ class Pilha:
                      - a = flag que indica que há um ou n elementos na pilha
                      - b = a pilha propriamente dita
         '''
-        print(1, self.__items if self.pilha_vazia() > 0 else 0, "Pilha Vazia")
+        print(self.__items if not self.pilha_vazia() else "Pilha Vazia")
 
     ## Método: Topo da Pilha, o ultimo elemento
     def topo_pilha(self):
