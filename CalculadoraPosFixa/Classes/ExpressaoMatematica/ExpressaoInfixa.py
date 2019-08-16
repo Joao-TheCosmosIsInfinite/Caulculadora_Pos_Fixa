@@ -6,7 +6,7 @@ class ExpressaoInf:
             qualquer informação, utilizando o conceito nativo dessa estrutura de dados
 
             Attributes: Não possui
-        """
+    """
     ## Método: inicar a classe
     def __init__(self, notacao):
         ''' Constructor:    __init__
@@ -40,6 +40,10 @@ class ExpressaoInf:
     ## Método: identificar se um dado operador é negativo
     def eh_operador(self, caracter):
         return True if ("+-*/" in caracter) else False
+
+    ## Método: identificar se um dado caracter é um operando
+    def eh_operando(self, caracter):
+        return True if not (self.eh_parenteses(caracter) or self.eh_operador(caracter)) else False
 
     ## Método: descobrir qual o proximo item da formula
     def sequencia_numerica(self, seq, formula, atual):

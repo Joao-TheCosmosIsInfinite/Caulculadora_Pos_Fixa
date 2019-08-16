@@ -25,6 +25,10 @@ class Pilha:
         '''
         return len(self.__items)
 
+    ## Método: Copiar Classe
+    def __copy__(self):
+        return Pilha(self.__items)
+
     ## Método: Limpar Pilha
     def limpar_pilha(self):
         ''' Constructor:    limpar_pilha
@@ -67,7 +71,7 @@ class Pilha:
                     - a = flag que indica que foi possivel remover um elemento
                     - b = o elemento removido em si
         '''
-        return 1, self.__items.pop() if self.pilha_vazia() > 0 else 0, "Pilha Vazia"
+        return self.__items.pop() if self.pilha_vazia() > 0 else  "Pilha Vazia"
 
     ## Método: Exibir a pilha
     def exibir_pilha(self):
@@ -91,6 +95,15 @@ class Pilha:
                     - a = flag que indica que há um ou n elementos na pilha
                     - b = a pilha propriamente dita
          '''
-        return 1, self.__items[-1] if self.pilha_vazia() > 0 else 0, "Pilha Vazia"
+        return self.__items[-1] if not self.pilha_vazia() else 0
+
+    ## Método: Inverter Pilha
+    def inverter_pilha(self):
+        if not self.pilha_vazia():
+            self.__items.reverse()
+        else:
+
+            print("Pilha Vazia.")
+
 
 
